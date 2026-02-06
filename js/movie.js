@@ -1,6 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const imdbID = urlParams.get('imdbID');
-fetch(`http://www.omdbapi.com/?apikey=21362ef4&i=${imdbID}`)
+fetch(`https://www.omdbapi.com/?apikey=21362ef4&i=${imdbID}`)
     .then(response => response.json())
     .then(data => {
         displayMovieDetails(data);
