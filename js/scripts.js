@@ -6,7 +6,7 @@ const searchResults = document.getElementById('searchResults');
 searchButton.addEventListener('click', () => {
     const searchTerm = searchInput.value;
     if (searchTerm) {
-        fetchMovies(`http://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`).then(data => {
+        fetchMovies(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`).then(data => {
             if (data.Response === "True") {
                 displaySearchResults(data.Search);
             } else {
@@ -18,7 +18,7 @@ searchButton.addEventListener('click', () => {
 searchInput.addEventListener('input', debounce(() => {
     const searchTerm = searchInput.value;
     if (searchTerm) {
-fetchMovies(`http://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`).then(data => {
+fetchMovies(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`).then(data => {
             if (data.Response === "True") {
                 displaySearchResults(data.Search);
             } else {
@@ -63,7 +63,7 @@ const popularMovieIDs = ['tt1630029','tt4154796','tt7286456','tt1790809','tt1375
 function displayPopularMovies() {
     const popularMoviesSection = document.getElementById('popularMovies');
     popularMovieIDs.forEach(imdbID => {
-        fetch(`http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)
+        fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)
             .then(response => response.json())
             .then(movieData => {
                 const moviePoster = document.createElement('img');

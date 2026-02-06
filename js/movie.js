@@ -19,11 +19,3 @@ function displayMovieDetails(movie) {
     document.getElementById('languages').textContent =  movie.Language;
     document.getElementById('plot').textContent =  movie.Plot;   
 }
-const moviePosters = document.querySelectorAll('.resultCard img');
-moviePosters.forEach(poster => {
-    poster.addEventListener('click', function() {
-        const imdbID = this.getAttribute('data-imdbid');
-        fetchMovieDetails(imdbID);
-    });
-});
-
