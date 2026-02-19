@@ -133,4 +133,43 @@ footer {
 .resultCard:hover {
     transform: scale(1.1);
 }
-
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 10px 0;
+    }
+    nav ul li {
+        margin: 6px 0;
+    }
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    #searchInput {
+        width: 90%;
+        margin-bottom: 10px;
+    }
+    #searchButton {
+        width: 90%;
+    }
+    .results {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .resultCard {
+        width: 90%;
+        margin-bottom: 15px;
+    }
+    .movie-poster {
+        width: 120px;
+        margin: 10px;
+    }
+}

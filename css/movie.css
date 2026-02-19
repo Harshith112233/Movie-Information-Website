@@ -52,4 +52,19 @@ strong {
         font-size: 14px;
     }
 }
-
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+    #poster {
+        width: 100%;
+        max-width: 260px;
+        display: block;
+        margin: 0 auto 20px;
+    }
+    p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+}
