@@ -1,79 +1,103 @@
-const apiKey = '21362ef4';
-const searchInput = document.getElementById('searchInput');
-const searchButton = document.getElementById('searchButton');
-const searchResults = document.getElementById('searchResults');
+document.addEventListener("DOMContentLoaded", () => {
 
-searchButton.addEventListener('click', () => {
-    const searchTerm = searchInput.value;
+  const apiKey = '21362ef4';
+
+  const searchInput = document.getElementById('searchInput');
+  const searchButton = document.getElementById('searchButton');
+  const searchResults = document.getElementById('searchResults');
+
+  /* ---------- SEARCH BUTTON ---------- */
+  searchButton.addEventListener('click', () => {
+    const searchTerm = searchInput.value.trim();
     if (searchTerm) {
-        fetchMovies(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`).then(data => {
-            if (data.Response === "True") {
-                displaySearchResults(data.Search);
-            } else {
-                searchResults.innerHTML = `<p>No results found for "${searchTerm}".</p>`;
-            }
+      fetchMovies(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`)
+        .then(data => {
+          if (data.Response === "True") {
+            displaySearchResults(data.Search);
+          } else {
+            searchResults.innerHTML = `<p>No results found for "${searchTerm}".</p>`;
+          }
         });
     }
-});
-searchInput.addEventListener('input', debounce(() => {
-    const searchTerm = searchInput.value;
+  });
+
+  /* ---------- SEARCH AS YOU TYPE ---------- */
+  searchInput.addEventListener('input', debounce(() => {
+    const searchTerm = searchInput.value.trim();
     if (searchTerm) {
-fetchMovies(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`).then(data => {
-            if (data.Response === "True") {
-                displaySearchResults(data.Search);
-            } else {
-                searchResults.innerHTML = `<p>No results found for "${searchTerm}".</p>`;
-            }
+      fetchMovies(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`)
+        .then(data => {
+          if (data.Response === "True") {
+            displaySearchResults(data.Search);
+          } else {
+            searchResults.innerHTML = `<p>No results found for "${searchTerm}".</p>`;
+          }
         });
+    } else {
+      searchResults.innerHTML = '';
     }
-}, 300));
-async function fetchMovies(url) {
+  }, 300));
+
+  /* ---------- FETCH ---------- */
+  async function fetchMovies(url) {
     try {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data;
+      const response = await fetch(url);
+      return await response.json();
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error);
     }
-}function displaySearchResults(results) {
+  }
+
+  /* ---------- DISPLAY SEARCH ---------- */
+  function displaySearchResults(results) {
     searchResults.innerHTML = '';
     results.forEach(result => {
-        const resultCard = document.createElement('div');
-        resultCard.className = 'resultCard';
-        resultCard.innerHTML = `
-            <img src="${result.Poster}" alt="${result.Title}" data-imdbid="${result.imdbID}">
-            <h2>${result.Title} (${result.Year})</h2>
-        `;
-        resultCard.addEventListener('click', () => {
-            window.location.href = `movie.html?imdbID=${result.imdbID}`;
-        });
-        searchResults.appendChild(resultCard);
+      const resultCard = document.createElement('div');
+      resultCard.className = 'resultCard';
+      resultCard.innerHTML = `
+        <img src="${result.Poster !== 'N/A' ? result.Poster : 'images/no-image.png'}">
+        <h3>${result.Title} (${result.Year})</h3>
+      `;
+      resultCard.addEventListener('click', () => {
+        window.location.href = `movie.html?imdbID=${result.imdbID}`;
+      });
+      searchResults.appendChild(resultCard);
     });
-}
-function debounce(func, delay) {
+  }
+
+  /* ---------- DEBOUNCE ---------- */
+  function debounce(func, delay) {
     let debounceTimer;
-    return function() {
-        const context = this;
-        const args = arguments;
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => func.apply(context, args), delay);
+    return function () {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(func, delay);
     };
-}
-const popularMovieIDs = ['tt1630029','tt4154796','tt7286456','tt1790809','tt1375666','tt4849438','tt0454921','tt6105098','tt0120338','tt1457767','tt0816692','tt16116174','tt0468569','tt2250912','tt2091384','tt3722118','tt1211837','tt5034838','tt0988045','tt21692408','tt27511275','tt0118799','tt0249795','tt0054215','tt3735246','tt6836936','tt15398776','tt0172495','tt11322920','tt6139732'];
-function displayPopularMovies() {
+  }
+
+  /* ---------- POPULAR MOVIES ---------- */
+  const popularMovieIDs = [
+    'tt1630029','tt4154796','tt7286456','tt1790809','tt1375666','tt0468569',
+    'tt4849438','tt0454921','tt6105098','tt0120338','tt1457767','tt10872600',
+    'tt0816692','tt0373889','tt15097216','tt1568346','tt2096673','tt2091384'
+  ];
+
+  function displayPopularMovies() {
     const popularMoviesSection = document.getElementById('popularMovies');
     popularMovieIDs.forEach(imdbID => {
-        fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)
-            .then(response => response.json())
-            .then(movieData => {
-                const moviePoster = document.createElement('img');
-                moviePoster.src = movieData.Poster;
-                moviePoster.classList.add('movie-poster');
-                moviePoster.addEventListener('click', () => {
-                    window.open(`movie.html?imdbID=${imdbID}`, '_blank');
-                });
-                popularMoviesSection.appendChild(moviePoster);
-            });
+      fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)
+        .then(res => res.json())
+        .then(movie => {
+          const img = document.createElement('img');
+          img.src = movie.Poster;
+          img.className = 'movie-poster';
+          img.addEventListener('click', () => {
+            window.open(`movie.html?imdbID=${imdbID}`, '_blank');
+          });
+          popularMoviesSection.appendChild(img);
+        });
     });
-}
-displayPopularMovies();
+  }
+
+  displayPopularMovies();
+
+});

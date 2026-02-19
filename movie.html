@@ -8,19 +8,48 @@
     <link rel="stylesheet" href="css/movie.css">
 </head>
 <body>
-    <div class="container">
-        <h1 id="title"></h1>
+    <div class="movie-bg"></div>
+
+
+  <section class="movie-page">
+    <div class="movie-card">
+
+      <!-- LEFT -->
+      <div class="movie-left">
         <img id="poster" alt="Movie Poster">
-        <p><strong>RELEASE DATE:</strong> <span id="release"></span></p>
-        <p><strong>DIRECTOR:</strong> <span id="director"></span></p>
-        <p><strong>STAR CAST:</strong> <span id="cast"></span></p>
-        <p><strong>GENRE:</strong> <span id="genre"></span></p>
-        <p><strong>RATING:</strong> <span id="rating"></span></p>
-        <p><strong>DURATION:</strong> <span id="duration"></span></p>
-        <p><strong>LANGUAGES:</strong> <span id="languages"></span></p>
-        <p><strong>PLOT:</strong> <span id="plot"></span></p>
+
+        <div class="quick-info">
+          <span>⭐ <strong id="rating"></strong></span>
+          <span>⏱ <strong id="duration"></strong></span>
+          <span>🎬 <strong id="genre"></strong></span>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="movie-right">
+        <h1 id="title"></h1>
+
+        <div class="meta">
+          <p><strong>Release:</strong> <span id="release"></span></p>
+          <p><strong>Director:</strong> <span id="director"></span></p>
+          <p><strong>Cast:</strong> <span id="cast"></span></p>
+          <p><strong>Languages:</strong> <span id="languages"></span></p>
+        </div>
+
+        <div class="plot">
+          <h3>Plot</h3>
+          <p id="plot"></p>
+        </div>
+      </div>
+
     </div>
-    <script src="js/movie.js"></script>
+  </section>
+  <button class="back-btn" onclick="history.back()">⬅ Home</button>
+
+
+  <script src="js/movie.js"></script>
+
 </body>
+
 </html>
 
